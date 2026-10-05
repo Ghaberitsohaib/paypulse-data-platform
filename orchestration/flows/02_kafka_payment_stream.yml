@@ -1,0 +1,9 @@
+id: 02_kafka_payment_stream
+namespace: fintech.paypulse
+description: "Continuous Kafka payment stream ingestion to MinIO Bronze Lake"
+
+tasks:
+  - id: run_sink
+    type: io.kestra.plugin.scripts.python.Commands
+    commands:
+      - python streaming/consumer_to_lakehouse.py

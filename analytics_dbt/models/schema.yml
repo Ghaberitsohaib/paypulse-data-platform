@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: stg_payments
+    description: "Raw streaming transactions cleaned and typed"
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: amount
+        tests:
+          - not_null
+
+  - name: fct_transactions
+    description: "Atomic transaction fact table with currency normalization to USD"
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: amount_usd
+        tests:
+          - not_null
+
+  - name: fct_merchant_daily_payouts
+    description: "Daily merchant settlement balances after fees and reserves"
+    columns:
+      - name: merchant_id
+        tests:
+          - not_null
+          - unique

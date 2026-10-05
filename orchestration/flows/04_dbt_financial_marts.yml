@@ -1,0 +1,9 @@
+id: 04_dbt_financial_marts
+namespace: fintech.paypulse
+description: "Dimensional modeling and financial compliance assertions via dbt"
+
+tasks:
+  - id: run_dbt
+    type: io.kestra.plugin.scripts.python.Commands
+    commands:
+      - python analytics_dbt/run_dbt.py

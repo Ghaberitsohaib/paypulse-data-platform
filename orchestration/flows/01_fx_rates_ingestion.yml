@@ -1,0 +1,9 @@
+id: 01_fx_rates_ingestion
+namespace: fintech.paypulse
+description: "Hourly Central Bank FX Rates and Merchant Registry Ingestion"
+
+tasks:
+  - id: run_dlt
+    type: io.kestra.plugin.scripts.python.Commands
+    commands:
+      - python ingestion/dlt_fx_rates_pipeline.py

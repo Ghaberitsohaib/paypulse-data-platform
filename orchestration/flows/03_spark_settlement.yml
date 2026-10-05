@@ -1,0 +1,9 @@
+id: 03_spark_settlement
+namespace: fintech.paypulse
+description: "Daily PySpark merchant settlement and fee reconciliation"
+
+tasks:
+  - id: run_spark
+    type: io.kestra.plugin.scripts.python.Commands
+    commands:
+      - python batch/spark_reconciliation_job.py

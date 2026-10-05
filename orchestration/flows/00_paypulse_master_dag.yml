@@ -1,0 +1,24 @@
+id: 00_paypulse_master_dag
+namespace: fintech.paypulse
+description: "Master End-to-End Orchestrator: FX Ingestion -> Stream Sink -> Spark Settlement -> dbt Marts"
+
+tasks:
+  - id: ingest_fx_and_merchants
+    type: io.kestra.plugin.scripts.python.Commands
+    commands:
+      - python ingestion/dlt_fx_rates_pipeline.py
+
+  - id: consume_kafka_stream
+    type: io.kestra.plugin.scripts.python.Commands
+    commands:
+      - python streaming/consumer_to_lakehouse.py
+
+  - id: run_spark_reconciliation
+    type: io.kestra.plugin.scripts.python.Commands
+    commands:
+      - python batch/spark_reconciliation_job.py
+
+  - id: execute_dbt_marts
+    type: io.kestra.plugin.scripts.python.Commands
+    commands:
+      - python analytics_dbt/run_dbt.py
