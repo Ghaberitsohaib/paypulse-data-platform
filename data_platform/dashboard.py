@@ -1,3 +1,7 @@
+import sys, os
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if ROOT_DIR not in sys.path:
+    sys.path.insert(0, ROOT_DIR)
 import os
 import duckdb
 import streamlit as st
@@ -8,7 +12,7 @@ from datetime import datetime
 
 st.set_page_config(
     page_title="PayPulse — FinTech & AML Intelligence",
-    page_icon="[FINTECH]",
+    page_icon="💳",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -37,21 +41,21 @@ def get_connection():
         return None
     return duckdb.connect(DB_PATH, read_only=True)
 
-st.title("[FINTECH] PayPulse — Real-Time Payment Lakehouse & AML Command Center")
+st.title("💳 PayPulse — Real-Time Payment Lakehouse & AML Command Center")
 st.caption("Enterprise FinTech Intelligence • Apache Kafka • MinIO Lakehouse • PySpark • dbt • DuckDB")
 
 con = get_connection()
 
 if con is None:
     st.warning("⚠️ Warehouse database not found yet. Run the end-to-end pipeline from the sidebar to initialize data!")
-    if st.button("[START] Initialize & Run Pipeline Now"):
+    if st.button("🚀 Initialize & Run Pipeline Now"):
         from scripts.run_pipeline import run_entire_pipeline
         run_entire_pipeline()
         st.rerun()
     st.stop()
 
 # Sidebar Controls
-st.sidebar.header("[RUN] Pipeline Execution Controls")
+st.sidebar.header("⚡ Pipeline Execution Controls")
 if st.sidebar.button("▶ Emit Live Kafka Transactions"):
     from streaming.consumer_to_lakehouse import sink_stream_to_lakehouse
     sink_stream_to_lakehouse(60)
@@ -100,7 +104,7 @@ c4.metric("Fees Collected", f"${total_fees:,.2f}")
 c5.metric("AML Fraud Alerts", f"{total_aml}", delta=f"{total_aml} flagged", delta_color="inverse")
 
 # Tabs
-tab1, tab2, tab3, tab4 = st.tabs(["📊 Executive Analytics", "[ALERT] Real-Time AML Fraud Monitor", "[MONEY] Merchant Settlement Ledger", "[SEARCH] Live Stream Inspector"])
+tab1, tab2, tab3, tab4 = st.tabs(["📊 Executive Analytics", "🚨 Real-Time AML Fraud Monitor", "💰 Merchant Settlement Ledger", "🔍 Live Stream Inspector"])
 
 with tab1:
     col_a, col_b = st.columns(2)
@@ -120,7 +124,7 @@ with tab1:
         st.plotly_chart(geo_fig, use_container_width=True)
 
 with tab2:
-    st.subheader("[ALERT] Anti-Money Laundering (AML) & Fraud Radar")
+    st.subheader("🚨 Anti-Money Laundering (AML) & Fraud Radar")
     st.write("Real-time detections of rapid card velocity, micro-testing, and high-risk geographical sanctions.")
     if len(aml_df) > 0:
         st.dataframe(
@@ -131,9 +135,9 @@ with tab2:
         st.success("No active AML suspicious activities detected.")
 
 with tab3:
-    st.subheader("[MONEY] Merchant Daily Settlement Ledger (Spark Gold Model)")
+    st.subheader("💰 Merchant Daily Settlement Ledger (Spark Gold Model)")
     st.dataframe(payout_df, use_container_width=True)
 
 with tab4:
-    st.subheader("[SEARCH] Atomic Streamed Transactions Feed")
+    st.subheader("🔍 Atomic Streamed Transactions Feed")
     st.dataframe(tx_df.sort_values(by="transaction_timestamp", ascending=False).head(50), use_container_width=True)
