@@ -20,7 +20,7 @@ st.set_page_config(
 )
 
 # -----------------------------------------------------------------------------
-# HIGH-END FINTECH DESIGN SYSTEM (CSS)
+# HIGH-END FINTECH PALETTE & CONTRAST DESIGN SYSTEM (CSS)
 # -----------------------------------------------------------------------------
 st.markdown("""
 <style>
@@ -30,19 +30,145 @@ html, body, [class*="css"] {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* Global Dark Canvas */
 .stApp {
-    background: radial-gradient(circle at 10% 10%, #0d1527 0%, #060911 60%, #04060a 100%);
-    color: #f1f5f9;
+    background-color: #070b14 !important;
+    background-image: radial-gradient(circle at 10% 10%, #0d1527 0%, #060911 60%, #04060a 100%) !important;
+    color: #f8fafc !important;
 }
 
-/* Top Navigation Banner */
+/* -------------------------------------------------------------------------
+   SIDEBAR: FORCE SLEEK HIGH-CONTRAST DARK THEME (Fixes Light Mode Mismatch)
+   ------------------------------------------------------------------------- */
+section[data-testid="stSidebar"] {
+    background-color: #0c1322 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stSidebarUserContent"] {
+    padding-top: 1.5rem !important;
+}
+
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3,
+section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] p {
+    color: #f1f5f9 !important;
+}
+
+section[data-testid="stSidebar"] label {
+    color: #94a3b8 !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+}
+
+/* Sidebar Selectbox Inputs */
+section[data-testid="stSidebar"] div[data-baseweb="select"] > div {
+    background-color: #141e33 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 10px !important;
+    color: #ffffff !important;
+}
+
+section[data-testid="stSidebar"] div[data-baseweb="select"] span {
+    color: #f8fafc !important;
+    font-weight: 500 !important;
+}
+
+/* Sidebar Dropdown Menu Popover */
+div[data-baseweb="popover"] ul {
+    background-color: #141e33 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+div[data-baseweb="popover"] li {
+    color: #f8fafc !important;
+}
+
+div[data-baseweb="popover"] li:hover {
+    background-color: #1e293b !important;
+}
+
+/* -------------------------------------------------------------------------
+   BUTTONS: HARMONIZED FINTECH COLORS
+   ------------------------------------------------------------------------- */
+button[kind="primary"] {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    padding: 10px 18px !important;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35) !important;
+    transition: all 0.2s ease !important;
+}
+
+button[kind="primary"]:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.55) !important;
+}
+
+button[kind="secondary"] {
+    background: #141e33 !important;
+    color: #f1f5f9 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    padding: 10px 18px !important;
+    transition: all 0.2s ease !important;
+}
+
+button[kind="secondary"]:hover {
+    background: #1e293b !important;
+    border-color: rgba(99, 102, 241, 0.5) !important;
+    color: #ffffff !important;
+}
+
+/* -------------------------------------------------------------------------
+   TABS: CRYSTAL CLEAR VISIBILITY & GLOWING ACTIVE TAB
+   ------------------------------------------------------------------------- */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px !important;
+    background-color: #0c1322 !important;
+    padding: 6px !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.stTabs [data-baseweb="tab"] {
+    border-radius: 8px !important;
+    padding: 9px 18px !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
+    color: #cbd5e1 !important; /* Bright crisp text for inactive tabs */
+    border: none !important;
+    background: transparent !important;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.stTabs [aria-selected="true"] {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45) !important;
+}
+
+/* -------------------------------------------------------------------------
+   TOP COMMAND BANNER
+   ------------------------------------------------------------------------- */
 .top-banner {
-    background: linear-gradient(135deg, rgba(23, 33, 56, 0.85) 0%, rgba(11, 17, 30, 0.95) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(135deg, rgba(23, 33, 56, 0.9) 0%, rgba(11, 17, 30, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     padding: 22px 28px;
     margin-bottom: 22px;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(16px);
     display: flex;
     justify-content: space-between;
@@ -55,7 +181,7 @@ html, body, [class*="css"] {
     font-size: 1.85rem;
     font-weight: 800;
     letter-spacing: -0.03em;
-    background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+    background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 0;
@@ -72,13 +198,14 @@ html, body, [class*="css"] {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(16, 185, 129, 0.12);
-    color: #10b981;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.35);
     padding: 6px 14px;
     border-radius: 9999px;
     font-size: 0.82rem;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.03em;
 }
 
 .pulse-dot {
@@ -96,9 +223,11 @@ html, body, [class*="css"] {
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
-/* Metric Cards */
+/* -------------------------------------------------------------------------
+   KPI CARDS: VIBRANT GLOW ACCENTS & CRISP TYPOGRAPHY
+   ------------------------------------------------------------------------- */
 .kpi-card {
-    background: linear-gradient(145deg, rgba(23, 32, 54, 0.8) 0%, rgba(13, 18, 32, 0.95) 100%);
+    background: linear-gradient(145deg, rgba(23, 33, 56, 0.85) 0%, rgba(13, 19, 34, 0.98) 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     padding: 18px 20px;
@@ -128,10 +257,11 @@ html, body, [class*="css"] {
 
 .kpi-title {
     color: #94a3b8;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
 }
 
 .kpi-icon {
@@ -159,58 +289,47 @@ html, body, [class*="css"] {
     font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace;
 }
 
+.kpi-value-emerald { color: #34d399; }
+.kpi-value-indigo  { color: #a5b4fc; }
+.kpi-value-amber   { color: #fcd34d; }
+.kpi-value-cyan    { color: #67e8f9; }
+.kpi-value-rose    { color: #fda4af; }
+
 .kpi-footer {
     margin-top: 8px;
     font-size: 0.76rem;
-    color: #64748b;
+    color: #94a3b8;
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-.kpi-tag-success { color: #10b981; font-weight: 600; }
-.kpi-tag-danger  { color: #f43f5e; font-weight: 600; }
+.kpi-tag-success { color: #34d399; font-weight: 600; }
+.kpi-tag-danger  { color: #fb7185; font-weight: 600; }
 
-/* Glass Panels */
+/* -------------------------------------------------------------------------
+   GLASS PANELS & DATAFRAMES
+   ------------------------------------------------------------------------- */
 .glass-panel {
-    background: linear-gradient(145deg, rgba(20, 28, 48, 0.7) 0%, rgba(11, 16, 28, 0.85) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: linear-gradient(145deg, rgba(20, 28, 48, 0.75) 0%, rgba(11, 16, 28, 0.9) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     padding: 20px 22px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(12px);
     margin-bottom: 18px;
 }
 
-/* Tabs */
-.stTabs [data-baseweb="tab-list"] {
-    gap: 10px;
-    background-color: rgba(15, 23, 42, 0.6);
-    padding: 8px 12px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-}
-.stTabs [data-baseweb="tab"] {
-    border-radius: 8px;
-    padding: 8px 18px;
-    font-weight: 600;
-    font-size: 0.88rem;
-    color: #94a3b8;
-}
-.stTabs [aria-selected="true"] {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
-    color: #ffffff !important;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
-}
-div[data-testid="stSidebar"] {
-    background-color: #090d16;
-    border-right: 1px solid rgba(255, 255, 255, 0.06);
+[data-testid="stDataFrame"] {
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# DATABASE LAYER
+# DATABASE LAYER (Zero Locking)
 # -----------------------------------------------------------------------------
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data_warehouse", "fintech_warehouse.duckdb")
 
@@ -234,7 +353,7 @@ st.sidebar.markdown("""
     <h2 style="font-size: 1.25rem; font-weight: 800; color: #f8fafc; margin: 0; display: flex; align-items: center; gap: 8px;">
         ⚡ Pipeline Control
     </h2>
-    <p style="color: #64748b; font-size: 0.8rem; margin: 4px 0 0 0;">Trigger live streaming & distributed batch jobs</p>
+    <p style="color: #94a3b8; font-size: 0.8rem; margin: 4px 0 0 0;">Trigger live streaming & distributed batch jobs</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -255,11 +374,11 @@ if st.sidebar.button("🔄 Trigger PySpark Reconciliation", use_container_width=
     st.rerun()
 
 st.sidebar.markdown("---")
-st.sidebar.markdown("<h3 style='font-size: 0.95rem; font-weight: 700; color: #cbd5e1;'>🔍 Filter Transactions</h3>", unsafe_allow_html=True)
+st.sidebar.markdown("<h3 style='font-size: 0.92rem; font-weight: 700; color: #f1f5f9;'>🔍 Filter Transactions</h3>", unsafe_allow_html=True)
 
 # Validate DB exists
 if not os.path.exists(DB_PATH):
-    st.warning("⚠️ Warehouse database not found yet. Run the end-to-end pipeline to initialize data!")
+    st.warning("⚠️ Warehouse database not found yet. Run the pipeline to initialize data!")
     if st.button("🚀 Initialize Pipeline Now", type="primary"):
         with st.spinner("Executing end-to-end pipeline..."):
             from scripts.run_pipeline import run_entire_pipeline
@@ -288,14 +407,14 @@ if selected_brand != "ALL":
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
-<div style="background: rgba(15, 23, 42, 0.5); padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-    <div style="color: #94a3b8; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Infrastructure Status</div>
-    <div style="margin-top: 8px; font-size: 0.8rem; display: flex; flex-direction: column; gap: 6px;">
-        <div>🟢 <b>Kafka:</b> KRaft Streaming</div>
-        <div>🟢 <b>Lakehouse:</b> MinIO Partitioned</div>
-        <div>🟢 <b>Batch:</b> PySpark Settlements</div>
-        <div>🟢 <b>Marts:</b> dbt Star Schema</div>
-        <div>🟢 <b>Engine:</b> DuckDB / BigQuery</div>
+<div style="background: rgba(20, 30, 50, 0.7); padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
+    <div style="color: #94a3b8; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Infrastructure Status</div>
+    <div style="margin-top: 10px; font-size: 0.82rem; display: flex; flex-direction: column; gap: 7px;">
+        <div>🟢 <b style="color:#f8fafc;">Kafka:</b> <span style="color:#94a3b8;">KRaft Streaming</span></div>
+        <div>🟢 <b style="color:#f8fafc;">Lakehouse:</b> <span style="color:#94a3b8;">MinIO Parquet</span></div>
+        <div>🟢 <b style="color:#f8fafc;">Batch:</b> <span style="color:#94a3b8;">PySpark Settlements</span></div>
+        <div>🟢 <b style="color:#f8fafc;">Marts:</b> <span style="color:#94a3b8;">dbt Star Schema</span></div>
+        <div>🟢 <b style="color:#f8fafc;">Engine:</b> <span style="color:#94a3b8;">DuckDB / BigQuery</span></div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -316,7 +435,7 @@ st.markdown("""
             <span class="pulse-dot"></span>
             LIVE STREAM ACTIVE
         </div>
-        <div style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); color: #818cf8; padding: 6px 14px; border-radius: 9999px; font-size: 0.82rem; font-weight: 600;">
+        <div style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.35); color: #a5b4fc; padding: 6px 14px; border-radius: 9999px; font-size: 0.82rem; font-weight: 700;">
             BASE CURRENCY: USD
         </div>
     </div>
@@ -324,7 +443,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# EXECUTIVE KPI METRICS (Rendered cleanly per column to avoid pre-code parsing)
+# EXECUTIVE KPI METRICS
 # -----------------------------------------------------------------------------
 total_tx = len(tx_df)
 approved_tx = len(tx_df[tx_df['status'] == 'APPROVED'])
@@ -343,7 +462,7 @@ with c1:
         <span class="kpi-title">Gross Volume (GPV)</span>
         <div class="kpi-icon kpi-icon-emerald">💎</div>
     </div>
-    <div class="kpi-value">${gross_volume:,.2f}</div>
+    <div class="kpi-value kpi-value-emerald">${gross_volume:,.2f}</div>
     <div class="kpi-footer">
         <span class="kpi-tag-success">● Cleared</span>
         <span>Normalized to USD</span>
@@ -358,7 +477,7 @@ with c2:
         <span class="kpi-title">Volume & Auth Rate</span>
         <div class="kpi-icon kpi-icon-indigo">⚡</div>
     </div>
-    <div class="kpi-value">{total_tx:,} <span style="font-size: 0.95rem; color: #94a3b8;">txns</span></div>
+    <div class="kpi-value kpi-value-indigo">{total_tx:,} <span style="font-size: 0.95rem; color: #94a3b8;">txns</span></div>
     <div class="kpi-footer">
         <span class="kpi-tag-success">✓ {approval_rate:.1f}%</span>
         <span>Authorization rate</span>
@@ -373,7 +492,7 @@ with c3:
         <span class="kpi-title">Interchange Revenue</span>
         <div class="kpi-icon kpi-icon-amber">📈</div>
     </div>
-    <div class="kpi-value">${total_fees:,.2f}</div>
+    <div class="kpi-value kpi-value-amber">${total_fees:,.2f}</div>
     <div class="kpi-footer">
         <span style="color: #fbbf24; font-weight: 600;">Avg {(total_fees / gross_volume * 100 if gross_volume > 0 else 0):.2f}%</span>
         <span>Take rate</span>
@@ -388,7 +507,7 @@ with c4:
         <span class="kpi-title">Disbursable Payouts</span>
         <div class="kpi-icon kpi-icon-cyan">🏛️</div>
     </div>
-    <div class="kpi-value">${total_net_payout:,.2f}</div>
+    <div class="kpi-value kpi-value-cyan">${total_net_payout:,.2f}</div>
     <div class="kpi-footer">
         <span style="color: #22d3ee; font-weight: 600;">Spark Settled</span>
         <span>Net after 5% reserve</span>
@@ -403,7 +522,7 @@ with c5:
         <span class="kpi-title">AML Threats Flagged</span>
         <div class="kpi-icon kpi-icon-rose">🛡️</div>
     </div>
-    <div class="kpi-value" style="color: #fb7185;">{total_aml}</div>
+    <div class="kpi-value kpi-value-rose">{total_aml}</div>
     <div class="kpi-footer">
         <span class="kpi-tag-danger">{(total_aml / total_tx * 100 if total_tx > 0 else 0):.1f}% Risk</span>
         <span>Velocity & micro tests</span>
@@ -447,7 +566,7 @@ with tab1:
     <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
         💳 Transaction Volume by Card Brand
     </h3>
-    <p style="color: #64748b; font-size: 0.8rem; margin: 0;">Distribution of Gross Processing Volume across payment networks</p>
+    <p style="color: #94a3b8; font-size: 0.8rem; margin: 0;">Distribution of Gross Processing Volume across payment networks</p>
 </div>
 """, unsafe_allow_html=True)
         brand_df = filtered_tx.groupby("card_brand")['amount_usd'].sum().reset_index()
@@ -478,7 +597,7 @@ with tab1:
     <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
         🌍 Geographic Revenue Distribution
     </h3>
-    <p style="color: #64748b; font-size: 0.8rem; margin: 0;">Processed payment volumes grouped by customer country origin</p>
+    <p style="color: #94a3b8; font-size: 0.8rem; margin: 0;">Processed payment volumes grouped by customer country origin</p>
 </div>
 """, unsafe_allow_html=True)
         geo_df = filtered_tx.groupby("country_code")['amount_usd'].sum().reset_index().sort_values(by="amount_usd", ascending=False)
@@ -504,7 +623,7 @@ with tab1:
     <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
         💱 Multi-Currency Cleared Balances (Base USD Conversion)
     </h3>
-    <p style="color: #64748b; font-size: 0.8rem; margin: 0;">Real-time FX conversion using central bank daily exchange rates</p>
+    <p style="color: #94a3b8; font-size: 0.8rem; margin: 0;">Real-time FX conversion using central bank daily exchange rates</p>
 </div>
 """, unsafe_allow_html=True)
     
@@ -546,7 +665,7 @@ with tab1:
 # -----------------------------------------------------------------------------
 with tab2:
     st.markdown("""
-<div style="background: linear-gradient(135deg, rgba(244, 63, 94, 0.1) 0%, rgba(30, 20, 30, 0.3) 100%); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
+<div style="background: linear-gradient(135deg, rgba(244, 63, 94, 0.12) 0%, rgba(30, 20, 30, 0.4) 100%); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
     <h4 style="color: #fb7185; margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 700;">
         🛡️ Real-Time Anti-Money Laundering (AML) Rules Engine
     </h4>
@@ -598,7 +717,7 @@ with tab2:
 # -----------------------------------------------------------------------------
 with tab3:
     st.markdown("""
-<div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%); border: 1px solid rgba(6, 182, 212, 0.25); border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
+<div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(15, 23, 42, 0.4) 100%); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
     <h4 style="color: #22d3ee; margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 700;">
         💰 PySpark Settlement Ledger & Merchant Payout Formula
     </h4>
@@ -657,7 +776,7 @@ with tab4:
     <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
         🔍 Raw Stream Inspection & Idempotency Audit
     </h3>
-    <p style="color: #64748b; font-size: 0.8rem; margin: 0;">
+    <p style="color: #94a3b8; font-size: 0.8rem; margin: 0;">
         Showing individual transaction events landed in Lakehouse (Parquet) and reconciled in dbt marts
     </p>
 </div>
