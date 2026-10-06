@@ -2,7 +2,6 @@ import sys, os
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
-import os
 import duckdb
 import streamlit as st
 import pandas as pd
@@ -33,41 +32,40 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Database Connection
+# Database Connection & Query helper
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data_warehouse", "fintech_warehouse.duckdb")
 
-def get_connection():
+def load_warehouse_data():
     if not os.path.exists(DB_PATH):
-        return None
-    return duckdb.connect(DB_PATH, read_only=True)
+        return None, None, None
+    con = duckdb.connect(DB_PATH, read_only=False)
+    try:
+        tx_df = con.execute("SELECT * FROM fintech_analytics.fct_transactions;").df()
+        payout_df = con.execute("SELECT * FROM fintech_analytics.fct_merchant_daily_payouts;").df()
+        aml_df = con.execute("SELECT * FROM fintech_analytics.fct_aml_suspicious_activity;").df()
+        return tx_df, payout_df, aml_df
+    finally:
+        con.close()
 
 st.title("💳 PayPulse — Real-Time Payment Lakehouse & AML Command Center")
 st.caption("Enterprise FinTech Intelligence • Apache Kafka • MinIO Lakehouse • PySpark • dbt • DuckDB")
 
-con = get_connection()
-
-if con is None:
-    st.warning("⚠️ Warehouse database not found yet. Run the end-to-end pipeline from the sidebar to initialize data!")
-    if st.button("🚀 Initialize & Run Pipeline Now"):
-        from scripts.run_pipeline import run_entire_pipeline
-        run_entire_pipeline()
-        st.rerun()
-    st.stop()
-
 # Sidebar Controls
 st.sidebar.header("⚡ Pipeline Execution Controls")
 if st.sidebar.button("▶ Emit Live Kafka Transactions"):
-    from streaming.consumer_to_lakehouse import sink_stream_to_lakehouse
-    sink_stream_to_lakehouse(60)
-    from analytics_dbt.run_dbt import run_dbt_models
-    run_dbt_models()
-    st.sidebar.success("Emitted 60 live transactions and synced dbt marts!")
+    with st.spinner("Emitting 60 Kafka payment events and syncing lakehouse..."):
+        from streaming.consumer_to_lakehouse import sink_stream_to_lakehouse
+        sink_stream_to_lakehouse(60)
+        from analytics_dbt.run_dbt import run_dbt_models
+        run_dbt_models()
+    st.sidebar.success("✅ Emitted 60 live transactions and synced dbt marts!")
     st.rerun()
 
 if st.sidebar.button("🔄 Trigger Spark Reconciliation"):
-    from batch.spark_reconciliation_job import run_spark_reconciliation_batch
-    run_spark_reconciliation_batch()
-    st.sidebar.success("Spark batch reconciliation completed!")
+    with st.spinner("Running Apache Spark batch settlement & fee reconciliation..."):
+        from batch.spark_reconciliation_job import run_spark_reconciliation_batch
+        run_spark_reconciliation_batch()
+    st.sidebar.success("✅ Spark batch reconciliation completed!")
     st.rerun()
 
 st.sidebar.markdown("---")
@@ -80,11 +78,21 @@ st.sidebar.info("""
 - **Warehouse**: DuckDB / GCP BigQuery
 """)
 
-# Key Financial Metrics
+# Load Financial Marts
+if not os.path.exists(DB_PATH):
+    st.warning("⚠️ Warehouse database not found yet. Run the pipeline to initialize data!")
+    if st.button("🚀 Initialize & Run Pipeline Now"):
+        with st.spinner("Running end-to-end pipeline..."):
+            from scripts.run_pipeline import run_entire_pipeline
+            run_entire_pipeline()
+        st.rerun()
+    st.stop()
+
 try:
-    tx_df = con.execute("SELECT * FROM fintech_analytics.fct_transactions;").df()
-    payout_df = con.execute("SELECT * FROM fintech_analytics.fct_merchant_daily_payouts;").df()
-    aml_df = con.execute("SELECT * FROM fintech_analytics.fct_aml_suspicious_activity;").df()
+    tx_df, payout_df, aml_df = load_warehouse_data()
+    if tx_df is None:
+        st.error("Warehouse data could not be loaded.")
+        st.stop()
 except Exception as e:
     st.error(f"Error loading marts: {e}")
     st.stop()
