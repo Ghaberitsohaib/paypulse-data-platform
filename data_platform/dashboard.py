@@ -502,7 +502,7 @@ with tab1:
             textinfo='percent+label',
             marker=dict(line=dict(color='#0b0f19', width=2))
         )
-        fig_brand.update_layout(get_dark_plotly_layout(height=320))
+        fig_brand.update_layout(**get_dark_plotly_layout(height=320))
         st.plotly_chart(fig_brand, use_container_width=True)
 
     with c_right:
@@ -524,10 +524,10 @@ with tab1:
             color_continuous_scale=["#312e81", "#6366f1", "#06b6d4", "#10b981"]
         )
         fig_geo.update_layout(
-            get_dark_plotly_layout(height=320),
             xaxis=dict(title=None, showgrid=False),
             yaxis=dict(title="Volume (USD)", showgrid=True, gridcolor="rgba(255,255,255,0.05)"),
-            coloraxis_showscale=False
+            coloraxis_showscale=False,
+            **get_dark_plotly_layout(height=320)
         )
         st.plotly_chart(fig_geo, use_container_width=True)
 
@@ -567,10 +567,10 @@ with tab1:
             color_discrete_sequence=["#10b981", "#6366f1", "#f59e0b", "#ec4899"]
         )
         fig_curr.update_layout(
-            get_dark_plotly_layout(height=240),
             showlegend=False,
             xaxis=dict(title=None, showgrid=False),
-            yaxis=dict(title="Total USD", showgrid=True, gridcolor="rgba(255,255,255,0.05)")
+            yaxis=dict(title="Total USD", showgrid=True, gridcolor="rgba(255,255,255,0.05)"),
+            **get_dark_plotly_layout(height=240)
         )
         st.plotly_chart(fig_curr, use_container_width=True)
 
@@ -622,7 +622,7 @@ with tab2:
                     hole=0.45,
                     color_discrete_sequence=["#f43f5e", "#fb923c", "#facc15"]
                 )
-                fig_reasons.update_layout(get_dark_plotly_layout(height=290))
+                fig_reasons.update_layout(**get_dark_plotly_layout(height=290))
                 st.plotly_chart(fig_reasons, use_container_width=True)
             else:
                 st.success("All flagged events analyzed cleanly.")
@@ -678,10 +678,10 @@ with tab3:
         ))
         fig_settle.update_layout(
             barmode='group',
-            get_dark_plotly_layout(height=340),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
             xaxis=dict(showgrid=False),
-            yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", title="USD")
+            yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", title="USD"),
+            **get_dark_plotly_layout(height=340)
         )
         st.plotly_chart(fig_settle, use_container_width=True)
 
