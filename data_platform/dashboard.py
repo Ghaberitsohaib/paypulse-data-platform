@@ -11,233 +11,206 @@ import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime
 
-# Configure page settings
+# Configure page layout
 st.set_page_config(
-    page_title="PayPulse | Real-Time Payment Lakehouse & AML Platform",
+    page_title="PayPulse | Real-Time FinTech & AML Command Center",
     page_icon="💳",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # -----------------------------------------------------------------------------
-# HIGH-END FINTECH UI DESIGN SYSTEM (CSS)
+# HIGH-END FINTECH DESIGN SYSTEM (CSS)
 # -----------------------------------------------------------------------------
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
 
-    html, body, [class*="css"] {
-        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    
-    .stApp {
-        background: radial-gradient(circle at 15% 15%, #0e1526 0%, #070a12 60%, #05070b 100%);
-        color: #f1f5f9;
-    }
+html, body, [class*="css"] {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
-    /* Top Navigation Banner */
-    .top-banner {
-        background: linear-gradient(135deg, rgba(20, 29, 49, 0.8) 0%, rgba(13, 19, 33, 0.95) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 24px 30px;
-        margin-bottom: 24px;
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(16px);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
+.stApp {
+    background: radial-gradient(circle at 10% 10%, #0d1527 0%, #060911 60%, #04060a 100%);
+    color: #f1f5f9;
+}
 
-    .banner-title {
-        font-size: 1.85rem;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
+/* Top Navigation Banner */
+.top-banner {
+    background: linear-gradient(135deg, rgba(23, 33, 56, 0.85) 0%, rgba(11, 17, 30, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 22px 28px;
+    margin-bottom: 22px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(16px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
 
-    .banner-subtitle {
-        color: #94a3b8;
-        font-size: 0.92rem;
-        margin-top: 6px;
-        font-weight: 400;
-    }
+.banner-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
 
-    .status-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(16, 185, 129, 0.12);
-        color: #10b981;
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        padding: 6px 14px;
-        border-radius: 9999px;
-        font-size: 0.82rem;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-    }
+.banner-subtitle {
+    color: #94a3b8;
+    font-size: 0.92rem;
+    margin-top: 6px;
+    font-weight: 400;
+}
 
-    .pulse-dot {
-        width: 8px;
-        height: 8px;
-        background-color: #10b981;
-        border-radius: 50%;
-        box-shadow: 0 0 10px #10b981;
-        animation: pulse 2s infinite;
-    }
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
 
-    @keyframes pulse {
-        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-        70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-    }
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #10b981;
+    animation: pulse 2s infinite;
+}
 
-    /* Metric Cards Grid */
-    .metric-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-        gap: 16px;
-        margin-bottom: 24px;
-    }
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
 
-    .kpi-card {
-        background: linear-gradient(145deg, rgba(23, 32, 54, 0.75) 0%, rgba(13, 18, 32, 0.9) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 20px 22px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-        backdrop-filter: blur(12px);
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-    }
+/* Metric Cards */
+.kpi-card {
+    background: linear-gradient(145deg, rgba(23, 32, 54, 0.8) 0%, rgba(13, 18, 32, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    margin-bottom: 12px;
+}
 
-    .kpi-card:hover {
-        transform: translateY(-3px);
-        border-color: rgba(99, 102, 241, 0.4);
-        box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15);
-    }
+.kpi-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(99, 102, 241, 0.4);
+}
 
-    .kpi-card-emerald { border-top: 3px solid #10b981; }
-    .kpi-card-indigo  { border-top: 3px solid #6366f1; }
-    .kpi-card-cyan    { border-top: 3px solid #06b6d4; }
-    .kpi-card-amber   { border-top: 3px solid #f59e0b; }
-    .kpi-card-rose    { border-top: 3px solid #f43f5e; }
+.kpi-card-emerald { border-top: 3px solid #10b981; }
+.kpi-card-indigo  { border-top: 3px solid #6366f1; }
+.kpi-card-amber   { border-top: 3px solid #f59e0b; }
+.kpi-card-cyan    { border-top: 3px solid #06b6d4; }
+.kpi-card-rose    { border-top: 3px solid #f43f5e; }
 
-    .kpi-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-    }
+.kpi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
 
-    .kpi-title {
-        color: #94a3b8;
-        font-size: 0.82rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-    }
+.kpi-title {
+    color: #94a3b8;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
 
-    .kpi-icon {
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.1rem;
-    }
+.kpi-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
 
-    .kpi-icon-emerald { background: rgba(16, 185, 129, 0.15); color: #10b981; }
-    .kpi-icon-indigo  { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
-    .kpi-icon-cyan    { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
-    .kpi-icon-amber   { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-    .kpi-icon-rose    { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
+.kpi-icon-emerald { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.kpi-icon-indigo  { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+.kpi-icon-amber   { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.kpi-icon-cyan    { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+.kpi-icon-rose    { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
 
-    .kpi-value {
-        font-size: 1.85rem;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        color: #f8fafc;
-        line-height: 1.2;
-        font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace;
-    }
+.kpi-value {
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #f8fafc;
+    line-height: 1.2;
+    font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace;
+}
 
-    .kpi-footer {
-        margin-top: 10px;
-        font-size: 0.78rem;
-        color: #64748b;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
+.kpi-footer {
+    margin-top: 8px;
+    font-size: 0.76rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
 
-    .kpi-tag-success { color: #10b981; font-weight: 600; }
-    .kpi-tag-danger  { color: #f43f5e; font-weight: 600; }
+.kpi-tag-success { color: #10b981; font-weight: 600; }
+.kpi-tag-danger  { color: #f43f5e; font-weight: 600; }
 
-    /* Glass Panels */
-    .glass-panel {
-        background: linear-gradient(145deg, rgba(20, 28, 48, 0.7) 0%, rgba(11, 16, 28, 0.85) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 16px;
-        padding: 22px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(12px);
-        margin-bottom: 20px;
-    }
+/* Glass Panels */
+.glass-panel {
+    background: linear-gradient(145deg, rgba(20, 28, 48, 0.7) 0%, rgba(11, 16, 28, 0.85) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    margin-bottom: 18px;
+}
 
-    /* FinTech Badges */
-    .badge {
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        display: inline-block;
-    }
-    .badge-approved { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .badge-declined { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-    .badge-aml      { background: rgba(244, 63, 94, 0.2); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.4); animation: pulse 1.5s infinite; }
-
-    /* Custom Streamlit adjustments */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
-        background-color: rgba(15, 23, 42, 0.6);
-        padding: 8px 12px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .stTabs [data-baseweb="tab"] {
-        border-radius: 8px;
-        padding: 8px 18px;
-        font-weight: 600;
-        font-size: 0.88rem;
-        color: #94a3b8;
-    }
-    .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
-        color: #ffffff !important;
-        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
-    }
-    div[data-testid="stSidebar"] {
-        background-color: #090d16;
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
-    }
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 10px;
+    background-color: rgba(15, 23, 42, 0.6);
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.stTabs [data-baseweb="tab"] {
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #94a3b8;
+}
+.stTabs [aria-selected="true"] {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+div[data-testid="stSidebar"] {
+    background-color: #090d16;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
 </style>
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# DATABASE DATA ACCESS LAYER (Zero Concurrency Lock)
+# DATABASE LAYER
 # -----------------------------------------------------------------------------
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data_warehouse", "fintech_warehouse.duckdb")
 
@@ -254,10 +227,10 @@ def load_warehouse_data():
         con.close()
 
 # -----------------------------------------------------------------------------
-# SIDEBAR CONTROLS & PIPELINE EXECUTION
+# SIDEBAR CONTROLS
 # -----------------------------------------------------------------------------
 st.sidebar.markdown("""
-<div style="padding: 10px 0 20px 0;">
+<div style="padding: 10px 0 16px 0;">
     <h2 style="font-size: 1.25rem; font-weight: 800; color: #f8fafc; margin: 0; display: flex; align-items: center; gap: 8px;">
         ⚡ Pipeline Control
     </h2>
@@ -282,35 +255,21 @@ if st.sidebar.button("🔄 Trigger PySpark Reconciliation", use_container_width=
     st.rerun()
 
 st.sidebar.markdown("---")
-
-# Quick Filters in Sidebar
 st.sidebar.markdown("<h3 style='font-size: 0.95rem; font-weight: 700; color: #cbd5e1;'>🔍 Filter Transactions</h3>", unsafe_allow_html=True)
 
-# -----------------------------------------------------------------------------
-# DATA LOAD & VALIDATION
-# -----------------------------------------------------------------------------
+# Validate DB exists
 if not os.path.exists(DB_PATH):
-    st.markdown("""
-    <div class="top-banner">
-        <div>
-            <h1 class="banner-title">💳 PayPulse — Real-Time Payment Lakehouse</h1>
-            <p class="banner-subtitle">Warehouse database initializing...</p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    st.warning("⚠️ Warehouse database not found yet. Click below to initialize and seed the platform with live mock data.")
-    if st.button("🚀 Initialize & Execute End-to-End Pipeline", type="primary"):
-        with st.spinner("Bootstrapping complete lakehouse pipeline..."):
+    st.warning("⚠️ Warehouse database not found yet. Run the end-to-end pipeline to initialize data!")
+    if st.button("🚀 Initialize Pipeline Now", type="primary"):
+        with st.spinner("Executing end-to-end pipeline..."):
             from scripts.run_pipeline import run_entire_pipeline
             run_entire_pipeline()
-        st.success("✅ Pipeline successfully initialized!")
         st.rerun()
     st.stop()
 
 tx_df, payout_df, aml_df = load_warehouse_data()
-
 if tx_df is None or len(tx_df) == 0:
-    st.info("No transaction data found in warehouse. Please emit transactions from the sidebar.")
+    st.info("No transaction data found in warehouse.")
     st.stop()
 
 # Interactive filter controls
@@ -342,14 +301,12 @@ st.sidebar.markdown("""
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# TOP HERO HEADER
+# HERO HEADER BANNER
 # -----------------------------------------------------------------------------
 st.markdown("""
 <div class="top-banner">
     <div>
-        <h1 class="banner-title">
-            <span>💳</span> PayPulse Command Center
-        </h1>
+        <h1 class="banner-title">💳 PayPulse Command Center</h1>
         <p class="banner-subtitle">
             Enterprise FinTech Lakehouse • Real-Time AML Fraud Radar • Sub-Second Payment Orchestration
         </p>
@@ -367,7 +324,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# EXECUTIVE KPI METRICS CARDS
+# EXECUTIVE KPI METRICS (Rendered cleanly per column to avoid pre-code parsing)
 # -----------------------------------------------------------------------------
 total_tx = len(tx_df)
 approved_tx = len(tx_df[tx_df['status'] == 'APPROVED'])
@@ -377,87 +334,86 @@ total_fees = tx_df[tx_df['status'] == 'APPROVED']['interchange_fee_usd'].sum()
 total_net_payout = payout_df['net_merchant_payout_usd'].sum() if 'net_merchant_payout_usd' in payout_df.columns else (gross_volume - total_fees)
 total_aml = len(aml_df)
 
-st.markdown(f"""
-<div class="metric-grid">
-    <!-- Card 1: Gross Processing Volume -->
-    <div class="kpi-card kpi-card-emerald">
-        <div class="kpi-header">
-            <span class="kpi-title">Gross Volume (GPV)</span>
-            <div class="kpi-icon kpi-icon-emerald">💎</div>
-        </div>
-        <div class="kpi-value">${gross_volume:,.2f}</div>
-        <div class="kpi-footer">
-            <span class="kpi-tag-success">● Cleared</span>
-            <span>All currencies normalized to USD</span>
-        </div>
-    </div>
+c1, c2, c3, c4, c5 = st.columns(5)
 
-    <!-- Card 2: Total Transactions & Approval -->
-    <div class="kpi-card kpi-card-indigo">
-        <div class="kpi-header">
-            <span class="kpi-title">Volume & Auth Rate</span>
-            <div class="kpi-icon kpi-icon-indigo">⚡</div>
-        </div>
-        <div class="kpi-value">{total_tx:,} <span style="font-size: 1rem; color: #94a3b8; font-weight: 500;">txns</span></div>
-        <div class="kpi-footer">
-            <span class="kpi-tag-success">✓ {approval_rate:.1f}%</span>
-            <span>Approval authorization rate</span>
-        </div>
+with c1:
+    st.markdown(f"""
+<div class="kpi-card kpi-card-emerald">
+    <div class="kpi-header">
+        <span class="kpi-title">Gross Volume (GPV)</span>
+        <div class="kpi-icon kpi-icon-emerald">💎</div>
     </div>
-
-    <!-- Card 3: Platform Fees Collected -->
-    <div class="kpi-card kpi-card-amber">
-        <div class="kpi-header">
-            <span class="kpi-title">Interchange Revenue</span>
-            <div class="kpi-icon kpi-icon-amber">📈</div>
-        </div>
-        <div class="kpi-value">${total_fees:,.2f}</div>
-        <div class="kpi-footer">
-            <span style="color: #fbbf24; font-weight: 600;">Avg {(total_fees / gross_volume * 100 if gross_volume > 0 else 0):.2f}%</span>
-            <span>Interchange fee take rate</span>
-        </div>
+    <div class="kpi-value">${gross_volume:,.2f}</div>
+    <div class="kpi-footer">
+        <span class="kpi-tag-success">● Cleared</span>
+        <span>Normalized to USD</span>
     </div>
+</div>
+""", unsafe_allow_html=True)
 
-    <!-- Card 4: Net Merchant Payouts -->
-    <div class="kpi-card kpi-card-cyan">
-        <div class="kpi-header">
-            <span class="kpi-title">Disbursable Payouts</span>
-            <div class="kpi-icon kpi-icon-cyan">🏛️</div>
-        </div>
-        <div class="kpi-value">${total_net_payout:,.2f}</div>
-        <div class="kpi-footer">
-            <span style="color: #22d3ee; font-weight: 600;">Spark Settled</span>
-            <span>Net after 5% rolling reserve</span>
-        </div>
+with c2:
+    st.markdown(f"""
+<div class="kpi-card kpi-card-indigo">
+    <div class="kpi-header">
+        <span class="kpi-title">Volume & Auth Rate</span>
+        <div class="kpi-icon kpi-icon-indigo">⚡</div>
     </div>
+    <div class="kpi-value">{total_tx:,} <span style="font-size: 0.95rem; color: #94a3b8;">txns</span></div>
+    <div class="kpi-footer">
+        <span class="kpi-tag-success">✓ {approval_rate:.1f}%</span>
+        <span>Authorization rate</span>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-    <!-- Card 5: AML Threat Radar -->
-    <div class="kpi-card kpi-card-rose">
-        <div class="kpi-header">
-            <span class="kpi-title">AML Threats Flagged</span>
-            <div class="kpi-icon kpi-icon-rose">🛡️</div>
-        </div>
-        <div class="kpi-value" style="color: #fb7185;">{total_aml}</div>
-        <div class="kpi-footer">
-            <span class="kpi-tag-danger">{(total_aml / total_tx * 100 if total_tx > 0 else 0):.1f}% Risk</span>
-            <span>Velocity & micro-testing triggers</span>
-        </div>
+with c3:
+    st.markdown(f"""
+<div class="kpi-card kpi-card-amber">
+    <div class="kpi-header">
+        <span class="kpi-title">Interchange Revenue</span>
+        <div class="kpi-icon kpi-icon-amber">📈</div>
+    </div>
+    <div class="kpi-value">${total_fees:,.2f}</div>
+    <div class="kpi-footer">
+        <span style="color: #fbbf24; font-weight: 600;">Avg {(total_fees / gross_volume * 100 if gross_volume > 0 else 0):.2f}%</span>
+        <span>Take rate</span>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+with c4:
+    st.markdown(f"""
+<div class="kpi-card kpi-card-cyan">
+    <div class="kpi-header">
+        <span class="kpi-title">Disbursable Payouts</span>
+        <div class="kpi-icon kpi-icon-cyan">🏛️</div>
+    </div>
+    <div class="kpi-value">${total_net_payout:,.2f}</div>
+    <div class="kpi-footer">
+        <span style="color: #22d3ee; font-weight: 600;">Spark Settled</span>
+        <span>Net after 5% reserve</span>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+with c5:
+    st.markdown(f"""
+<div class="kpi-card kpi-card-rose">
+    <div class="kpi-header">
+        <span class="kpi-title">AML Threats Flagged</span>
+        <div class="kpi-icon kpi-icon-rose">🛡️</div>
+    </div>
+    <div class="kpi-value" style="color: #fb7185;">{total_aml}</div>
+    <div class="kpi-footer">
+        <span class="kpi-tag-danger">{(total_aml / total_tx * 100 if total_tx > 0 else 0):.1f}% Risk</span>
+        <span>Velocity & micro tests</span>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# INTERACTIVE ANALYTICS TABS
+# PLOTLY THEME CONFIG
 # -----------------------------------------------------------------------------
-tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "📊 Global Payment Flows", 
-    "🚨 AML & Fraud Detection Radar", 
-    "💰 Merchant Settlement Ledger", 
-    "⚡ Atomic Transaction Stream",
-    "🏛️ System Architecture"
-])
-
-# Plotly theme configuration helper
 def get_dark_plotly_layout(height=340):
     return dict(
         height=height,
@@ -469,20 +425,31 @@ def get_dark_plotly_layout(height=340):
     )
 
 # -----------------------------------------------------------------------------
-# TAB 1: GLOBAL PAYMENT FLOWS
+# TABS
+# -----------------------------------------------------------------------------
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "📊 Global Payment Flows", 
+    "🚨 AML & Fraud Detection Radar", 
+    "💰 Merchant Settlement Ledger", 
+    "⚡ Atomic Transaction Stream",
+    "🏛️ System Architecture"
+])
+
+# -----------------------------------------------------------------------------
+# TAB 1: FLOWS
 # -----------------------------------------------------------------------------
 with tab1:
     c_left, c_right = st.columns([1, 1])
     
     with c_left:
         st.markdown("""
-        <div class="glass-panel">
-            <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
-                💳 Transaction Volume by Card Brand
-            </h3>
-            <p style="color: #64748b; font-size: 0.8rem; margin: 0 0 12px 0;">Distribution of Gross Processing Volume across payment networks</p>
-        </div>
-        """, unsafe_allow_html=True)
+<div class="glass-panel">
+    <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
+        💳 Transaction Volume by Card Brand
+    </h3>
+    <p style="color: #64748b; font-size: 0.8rem; margin: 0;">Distribution of Gross Processing Volume across payment networks</p>
+</div>
+""", unsafe_allow_html=True)
         brand_df = filtered_tx.groupby("card_brand")['amount_usd'].sum().reset_index()
         fig_brand = px.pie(
             brand_df, 
@@ -502,18 +469,18 @@ with tab1:
             textinfo='percent+label',
             marker=dict(line=dict(color='#0b0f19', width=2))
         )
-        fig_brand.update_layout(**get_dark_plotly_layout(height=320))
+        fig_brand.update_layout(**get_dark_plotly_layout(height=310))
         st.plotly_chart(fig_brand, use_container_width=True)
 
     with c_right:
         st.markdown("""
-        <div class="glass-panel">
-            <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
-                🌍 Geographic Revenue Distribution
-            </h3>
-            <p style="color: #64748b; font-size: 0.8rem; margin: 0 0 12px 0;">Processed payment volumes grouped by customer country origin</p>
-        </div>
-        """, unsafe_allow_html=True)
+<div class="glass-panel">
+    <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
+        🌍 Geographic Revenue Distribution
+    </h3>
+    <p style="color: #64748b; font-size: 0.8rem; margin: 0;">Processed payment volumes grouped by customer country origin</p>
+</div>
+""", unsafe_allow_html=True)
         geo_df = filtered_tx.groupby("country_code")['amount_usd'].sum().reset_index().sort_values(by="amount_usd", ascending=False)
         fig_geo = px.bar(
             geo_df,
@@ -527,19 +494,19 @@ with tab1:
             xaxis=dict(title=None, showgrid=False),
             yaxis=dict(title="Volume (USD)", showgrid=True, gridcolor="rgba(255,255,255,0.05)"),
             coloraxis_showscale=False,
-            **get_dark_plotly_layout(height=320)
+            **get_dark_plotly_layout(height=310)
         )
         st.plotly_chart(fig_geo, use_container_width=True)
 
-    # Multi-Currency Distribution & Timeline
+    # Multi-Currency Distribution
     st.markdown("""
-    <div class="glass-panel" style="margin-top: 10px;">
-        <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
-            💱 Multi-Currency Cleared Balances (Base USD Conversion)
-        </h3>
-        <p style="color: #64748b; font-size: 0.8rem; margin: 0 0 12px 0;">Real-time FX conversion using central bank daily exchange rates</p>
-    </div>
-    """, unsafe_allow_html=True)
+<div class="glass-panel" style="margin-top: 14px;">
+    <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
+        💱 Multi-Currency Cleared Balances (Base USD Conversion)
+    </h3>
+    <p style="color: #64748b; font-size: 0.8rem; margin: 0;">Real-time FX conversion using central bank daily exchange rates</p>
+</div>
+""", unsafe_allow_html=True)
     
     curr_summary = filtered_tx.groupby("currency").agg(
         tx_count=('transaction_id', 'count'),
@@ -575,19 +542,19 @@ with tab1:
         st.plotly_chart(fig_curr, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# TAB 2: AML & FRAUD DETECTION RADAR
+# TAB 2: AML RADAR
 # -----------------------------------------------------------------------------
 with tab2:
     st.markdown("""
-    <div style="background: linear-gradient(135deg, rgba(244, 63, 94, 0.1) 0%, rgba(30, 20, 30, 0.3) 100%); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
-        <h4 style="color: #fb7185; margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
-            <span>🛡️</span> Real-Time Anti-Money Laundering (AML) Rules Engine
-        </h4>
-        <p style="color: #cbd5e1; font-size: 0.85rem; margin: 0; line-height: 1.5;">
-            PayPulse inspects all incoming Kafka payment streams within <b>sub-50ms sliding windows</b>. Any transaction meeting velocity thresholds (<5s between authorizations), micro card-testing fraud (<$2.00 attempts), or high-risk geographic flags is immediately flagged with immutable reason codes.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+<div style="background: linear-gradient(135deg, rgba(244, 63, 94, 0.1) 0%, rgba(30, 20, 30, 0.3) 100%); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
+    <h4 style="color: #fb7185; margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 700;">
+        🛡️ Real-Time Anti-Money Laundering (AML) Rules Engine
+    </h4>
+    <p style="color: #cbd5e1; font-size: 0.85rem; margin: 0; line-height: 1.5;">
+        PayPulse inspects all incoming Kafka payment streams within <b>sub-50ms sliding windows</b>. Any transaction meeting velocity thresholds (<5s between authorizations), micro card-testing fraud (<$2.00 attempts), or high-risk geographic flags is immediately flagged with immutable reason codes.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
     if len(aml_df) > 0:
         col_aml_top, col_aml_pie = st.columns([2, 1])
@@ -605,7 +572,6 @@ with tab2:
 
         with col_aml_pie:
             st.markdown("<h4 style='color: #f8fafc; font-size: 0.95rem; font-weight: 700;'>Threat Breakdown by Trigger</h4>", unsafe_allow_html=True)
-            # Expand multiple reasons
             all_reasons = []
             for r in aml_df['aml_reasons']:
                 for sub in str(r).split(';'):
@@ -624,25 +590,23 @@ with tab2:
                 )
                 fig_reasons.update_layout(**get_dark_plotly_layout(height=290))
                 st.plotly_chart(fig_reasons, use_container_width=True)
-            else:
-                st.success("All flagged events analyzed cleanly.")
     else:
         st.success("✅ Clean health status: No high-risk AML transactions detected in the current stream!")
 
 # -----------------------------------------------------------------------------
-# TAB 3: MERCHANT SETTLEMENT & RESERVE LEDGER
+# TAB 3: SETTLEMENT LEDGER
 # -----------------------------------------------------------------------------
 with tab3:
     st.markdown("""
-    <div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%); border: 1px solid rgba(6, 182, 212, 0.25); border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
-        <h4 style="color: #22d3ee; margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
-            <span>💰</span> PySpark Settlement Ledger & Merchant Payout Formula
-        </h4>
-        <p style="color: #cbd5e1; font-size: 0.85rem; margin: 0; line-height: 1.5;">
-            <b>Net Merchant Payout</b> = Gross Volume - Interchange Fee (1.5% - 2.9%) - <b>5% Rolling Reserve Holdback</b> (retained for 90 days to shield against fraudulent chargebacks).
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+<div style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%); border: 1px solid rgba(6, 182, 212, 0.25); border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
+    <h4 style="color: #22d3ee; margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 700;">
+        💰 PySpark Settlement Ledger & Merchant Payout Formula
+    </h4>
+    <p style="color: #cbd5e1; font-size: 0.85rem; margin: 0; line-height: 1.5;">
+        <b>Net Merchant Payout</b> = Gross Volume - Interchange Fee (1.5% - 2.9%) - <b>5% Rolling Reserve Holdback</b> (retained for 90 days to shield against chargebacks).
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
     if len(payout_df) > 0:
         st.dataframe(
@@ -655,7 +619,6 @@ with tab3:
             use_container_width=True
         )
         
-        # Payout Comparison Chart
         st.markdown("<h4 style='color: #f8fafc; font-size: 0.95rem; font-weight: 700; margin-top: 15px;'>Gross Volume vs. Net Disbursable Payout by Merchant</h4>", unsafe_allow_html=True)
         fig_settle = go.Figure()
         fig_settle.add_trace(go.Bar(
@@ -690,15 +653,15 @@ with tab3:
 # -----------------------------------------------------------------------------
 with tab4:
     st.markdown("""
-    <div class="glass-panel">
-        <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
-            🔍 Raw Stream Inspection & Idempotency Audit
-        </h3>
-        <p style="color: #64748b; font-size: 0.8rem; margin: 0 0 12px 0;">
-            Showing individual transaction events landed in Lakehouse (Parquet) and reconciled in dbt marts
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+<div class="glass-panel">
+    <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin: 0 0 4px 0;">
+        🔍 Raw Stream Inspection & Idempotency Audit
+    </h3>
+    <p style="color: #64748b; font-size: 0.8rem; margin: 0;">
+        Showing individual transaction events landed in Lakehouse (Parquet) and reconciled in dbt marts
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
     stream_view = filtered_tx.sort_values(by="transaction_timestamp", ascending=False).head(100)
     st.dataframe(
@@ -716,51 +679,51 @@ with tab4:
     )
 
 # -----------------------------------------------------------------------------
-# TAB 5: SYSTEM ARCHITECTURE
+# TAB 5: ARCHITECTURE
 # -----------------------------------------------------------------------------
 with tab5:
     st.markdown("""
-    <div class="glass-panel">
-        <h3 style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; margin: 0 0 8px 0;">
-            🏛️ End-to-End Enterprise FinTech Stack
-        </h3>
-        <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.6;">
-            PayPulse was engineered according to modern lakehouse architectural patterns, delivering resilient sub-second processing and full ACID auditability for high-volume payment rails.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+<div class="glass-panel">
+    <h3 style="font-size: 1.15rem; font-weight: 800; color: #f8fafc; margin: 0 0 8px 0;">
+        🏛️ End-to-End Enterprise FinTech Stack
+    </h3>
+    <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.6;">
+        PayPulse was engineered according to modern lakehouse architectural patterns, delivering resilient sub-second processing and full ACID auditability for high-volume payment rails.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
     col_m1, col_m2, col_m3 = st.columns(3)
     with col_m1:
         st.markdown("""
-        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px; height: 100%;">
-            <div style="color: #6366f1; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px;">1. Ingestion & Streaming</div>
-            <p style="color: #94a3b8; font-size: 0.82rem; line-height: 1.5;">
-                • <b>Apache Kafka (KRaft)</b>: High-throughput payment authorizations & terminal events.<br>
-                • <b>dltHub</b>: Automated schema inference & daily central bank FX rate ingestion.<br>
-                • <b>Real-Time AML</b>: Sliding-window threat detector before persistence.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px; height: 100%;">
+    <div style="color: #6366f1; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px;">1. Ingestion & Streaming</div>
+    <p style="color: #94a3b8; font-size: 0.82rem; line-height: 1.5;">
+        • <b>Apache Kafka (KRaft)</b>: High-throughput payment authorizations & terminal events.<br>
+        • <b>dltHub</b>: Automated schema inference & daily FX rate ingestion.<br>
+        • <b>Real-Time AML</b>: Sliding-window threat detector before persistence.
+    </p>
+</div>
+""", unsafe_allow_html=True)
     with col_m2:
         st.markdown("""
-        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px; height: 100%;">
-            <div style="color: #06b6d4; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px;">2. Multi-Tier Lakehouse</div>
-            <p style="color: #94a3b8; font-size: 0.82rem; line-height: 1.5;">
-                • <b>Bronze Layer</b>: Raw partitioned Parquet files sinked into MinIO.<br>
-                • <b>PySpark Distributed Engine</b>: Aggregates daily payouts & calculates interchange fee holdbacks.<br>
-                • <b>Gold Ledger</b>: Cleared settlement ledgers ready for banking dispatch.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px; height: 100%;">
+    <div style="color: #06b6d4; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px;">2. Multi-Tier Lakehouse</div>
+    <p style="color: #94a3b8; font-size: 0.82rem; line-height: 1.5;">
+        • <b>Bronze Layer</b>: Raw partitioned Parquet files sinked into MinIO.<br>
+        • <b>PySpark Distributed Engine</b>: Aggregates daily payouts & calculates interchange fee holdbacks.<br>
+        • <b>Gold Ledger</b>: Cleared settlement ledgers ready for banking dispatch.
+    </p>
+</div>
+""", unsafe_allow_html=True)
     with col_m3:
         st.markdown("""
-        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px; height: 100%;">
-            <div style="color: #10b981; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px;">3. Analytics & Orchestration</div>
-            <p style="color: #94a3b8; font-size: 0.82rem; line-height: 1.5;">
-                • <b>dbt (Data Build Tool)</b>: Modular dimensional star schema (staging, dimensions, facts).<br>
-                • <b>Data Quality Tests</b>: Automated assertions on transaction amounts & keys.<br>
-                • <b>Kestra DAGs</b>: Declarative orchestrator for end-to-end lakehouse schedules.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+<div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px; height: 100%;">
+    <div style="color: #10b981; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px;">3. Analytics & Orchestration</div>
+    <p style="color: #94a3b8; font-size: 0.82rem; line-height: 1.5;">
+        • <b>dbt (Data Build Tool)</b>: Modular dimensional star schema (staging, dimensions, facts).<br>
+        • <b>Data Quality Tests</b>: Automated assertions on transaction amounts & keys.<br>
+        • <b>Kestra DAGs</b>: Declarative orchestrator for end-to-end lakehouse schedules.
+    </p>
+</div>
+""", unsafe_allow_html=True)
